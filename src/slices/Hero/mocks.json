@@ -42,6 +42,7 @@
 				"type": "Text"
 			},
 			"button_link": {
+				"key": "37249815-80f1-4916-9287-77b5997b1992",
 				"__TYPE__": "LinkContent",
 				"value": {
 					"__TYPE__": "ExternalLink",

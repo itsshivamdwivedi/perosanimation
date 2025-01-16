@@ -21,6 +21,8 @@ export default function ViewCanvas({}: Props) {
           top: 0,
           left: "50%",
           transform: "translateX(-50%)",
+          width: "100%", // Added explicit width
+          height: "100%", // Added explicit height
           overflow: "hidden",
           pointerEvents: "none",
           zIndex: 30,
@@ -29,7 +31,7 @@ export default function ViewCanvas({}: Props) {
         dpr={[1, 1.5]}
         gl={{ antialias: true }}
         camera={{
-          fov: 30,
+          fov: 40, // Adjusted FOV to change perceived object size
         }}
       >
         <Suspense fallback={null}>

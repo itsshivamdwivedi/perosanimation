@@ -1,68 +1,56 @@
-"use client";
+import React, { useRef } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { useGLTF, PerspectiveCamera } from '@react-three/drei';
 
-import { useGLTF, useTexture } from "@react-three/drei";
-import * as THREE from "three";
-
-useGLTF.preload("/Soda-can.gltf");
-
-const flavorTextures = {
-  lemonLime: "/labels/lemon-lime.png",
-  grape: "/labels/grape.png",
-  blackCherry: "/labels/cherry.png",
-  strawberryLemonade: "/labels/strawberry.png",
-  watermelon: "/labels/watermelon.png",
-};
-
-const metalMaterial = new THREE.MeshStandardMaterial({
-  roughness: 0.3,
-  metalness: 1,
-  color: "#bbbbbb",
-});
-
-export type SodaCanProps = {
-  flavor?: keyof typeof flavorTextures;
-  scale?: number;
-};
-
-export function SodaCan({
-  flavor = "blackCherry",
-  scale = 2,
-  ...props
-}: SodaCanProps) {
-  const { nodes } = useGLTF("/Soda-can.gltf");
-
-  const labels = useTexture(flavorTextures);
-
-  // Fixes upside down labels
-  labels.strawberryLemonade.flipY = false;
-  labels.blackCherry.flipY = false;
-  labels.watermelon.flipY = false;
-  labels.grape.flipY = false;
-  labels.lemonLime.flipY = false;
-
-  const label = labels[flavor];
+export function SodaCan(props) {
+  const { nodes, materials } = useGLTF('/peanutbutterjar2.gltf');
+  const cameraRef = useRef();
 
   return (
-    <group {...props} dispose={null} scale={scale} rotation={[0, -Math.PI, 0]}>
+    <group
+    position={[0, 0, 0]} // Position relative to the center
+    rotation={[1.623, 0, 0.73]} // Adjusted rotation to ensure front side
+    scale={[0.007, 0.007, 0.007]} // Reduced scale for smaller size
+  >
       <mesh
         castShadow
         receiveShadow
-        geometry={(nodes.cylinder as THREE.Mesh).geometry}
-        material={metalMaterial}
+        geometry={nodes.Mesh001.geometry}
+        material={materials['PEENUTBUTTER.001']}
       />
       <mesh
         castShadow
         receiveShadow
-        geometry={(nodes.cylinder_1 as THREE.Mesh).geometry}
-      >
-        <meshStandardMaterial roughness={0.15} metalness={0.7} map={label} />
-      </mesh>
+        geometry={nodes.Mesh001_1.geometry}
+        material={materials['Material.002']}
+      />
       <mesh
         castShadow
         receiveShadow
-        geometry={(nodes.Tab as THREE.Mesh).geometry}
-        material={metalMaterial}
+        geometry={nodes.Mesh001_2.geometry}
+        material={materials.lable}
       />
     </group>
   );
 }
+
+export default function CenteredSodaCan() {
+  return (
+    <Canvas
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        background: '#f0f0f0', // Optional background color
+      }}
+      camera={{ position: [0, 1.5, 3], fov: 35 }}
+    >
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[5, 5, 5]} />
+      <SodaCan />
+    </Canvas>
+  );
+}
+useGLTF.preload('/peanutbutterjar2.gltf');

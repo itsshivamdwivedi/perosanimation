@@ -1,13 +1,7 @@
 "use client";
 
-import { Content } from "@prismicio/client";
-import {
-  PrismicRichText,
-  PrismicText,
-  SliceComponentProps,
-} from "@prismicio/react";
-import { Center, Environment, View } from "@react-three/drei";
 import { useRef, useState } from "react";
+import { Center, Environment, View } from "@react-three/drei";
 import clsx from "clsx";
 import { Group } from "three";
 import gsap from "gsap";
@@ -23,7 +17,7 @@ const FLAVORS: {
   color: string;
   name: string;
 }[] = [
-  { flavor: "blackCherry", color: "#710523", name: "Black Cherry" },
+  { flavor: "blackCherry", color: "#710523", name: "Crunchy" },
   { flavor: "grape", color: "#572981", name: "Grape Goodness" },
   { flavor: "lemonLime", color: "#164405", name: "Lemon Lime" },
   {
@@ -35,14 +29,9 @@ const FLAVORS: {
 ];
 
 /**
- * Props for `Carousel`.
+ * Component for the "Carousel".
  */
-export type CarouselProps = SliceComponentProps<Content.CarouselSlice>;
-
-/**
- * Component for "Carousel" Slices.
- */
-const Carousel = ({ slice }: CarouselProps): JSX.Element => {
+const Carousel = (): JSX.Element => {
   const [currentFlavorIndex, setCurrentFlavorIndex] = useState(0);
   const sodaCanRef = useRef<Group>(null);
 
@@ -63,7 +52,7 @@ const Carousel = ({ slice }: CarouselProps): JSX.Element => {
         ease: "power2.inOut",
         duration: 1,
       },
-      0,
+      0
     )
       .to(
         ".background, .wavy-circles-outer, .wavy-circles-inner",
@@ -73,7 +62,7 @@ const Carousel = ({ slice }: CarouselProps): JSX.Element => {
           ease: "power2.inOut",
           duration: 1,
         },
-        0,
+        0
       )
       .to(".text-wrapper", { duration: 0.2, y: -10, opacity: 0 }, 0)
       .to({}, { onStart: () => setCurrentFlavorIndex(nextIndex) }, 0.5)
@@ -82,8 +71,6 @@ const Carousel = ({ slice }: CarouselProps): JSX.Element => {
 
   return (
     <section
-      data-slice-type={slice.slice_type}
-      data-slice-variation={slice.variation}
       className="carousel relative grid h-screen grid-rows-[auto,4fr,auto] justify-center overflow-hidden bg-white py-12 text-white"
     >
       <div className="background pointer-events-none absolute inset-0 bg-[#710523] opacity-50" />
@@ -91,7 +78,7 @@ const Carousel = ({ slice }: CarouselProps): JSX.Element => {
       <WavyCircles className="absolute left-1/2 top-1/2 h-[120vmin] -translate-x-1/2 -translate-y-1/2 text-[#710523]" />
 
       <h2 className="relative text-center text-5xl font-bold">
-        <PrismicText field={slice.primary.heading} />
+        Our Flavours
       </h2>
 
       <div className="grid grid-cols-[auto,auto,auto] items-center">
@@ -132,7 +119,7 @@ const Carousel = ({ slice }: CarouselProps): JSX.Element => {
           <p>{FLAVORS[currentFlavorIndex].name}</p>
         </div>
         <div className="mt-2 text-2xl font-normal opacity-90">
-          <PrismicRichText field={slice.primary.price_copy} />
+          Only $1.99 per can
         </div>
       </div>
     </section>

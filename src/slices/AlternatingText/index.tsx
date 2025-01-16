@@ -1,30 +1,32 @@
 "use client";
 
 import { Bounded } from "@/components/Bounded";
-import { asText, Content } from "@prismicio/client";
-import {
-  PrismicRichText,
-  PrismicText,
-  SliceComponentProps,
-} from "@prismicio/react";
 import { View } from "@react-three/drei";
 import Scene from "./Scene";
 import clsx from "clsx";
 
 /**
- * Props for `AlternatingText`.
- */
-export type AlternatingTextProps =
-  SliceComponentProps<Content.AlternatingTextSlice>;
-
-/**
  * Component for "AlternatingText" Slices.
  */
-const AlternatingText = ({ slice }: AlternatingTextProps): JSX.Element => {
+const AlternatingText = (): JSX.Element => {
+  // Replace this array with the new static content
+  const textGroups = [
+    {
+      heading: "My Custom Heading 1",
+      body: "This is the custom body text for the first section.",
+    },
+    {
+      heading: "My Custom Heading 2",
+      body: "This is the custom body text for the second section.",
+    },
+    {
+      heading: "My Custom Heading 3",
+      body: "This is the custom body text for the third section.",
+    },
+  ];
+
   return (
     <Bounded
-      data-slice-type={slice.slice_type}
-      data-slice-variation={slice.variation}
       className="alternating-text-container relative bg-yellow-300 text-sky-950"
     >
       <div>
@@ -33,9 +35,9 @@ const AlternatingText = ({ slice }: AlternatingTextProps): JSX.Element => {
             <Scene />
           </View>
 
-          {slice.primary.text_group.map((item, index) => (
+          {textGroups.map((item, index) => (
             <div
-              key={asText(item.heading)}
+              key={item.heading}
               className="alternating-section grid h-screen place-items-center gap-x-12 md:grid-cols-2"
             >
               <div
@@ -46,11 +48,9 @@ const AlternatingText = ({ slice }: AlternatingTextProps): JSX.Element => {
                 )}
               >
                 <h2 className="text-balance text-6xl font-bold">
-                  <PrismicText field={item.heading} />
+                  {item.heading}
                 </h2>
-                <div className="mt-4 text-xl">
-                  <PrismicRichText field={item.body} />
-                </div>
+                <div className="mt-4 text-xl">{item.body}</div>
               </div>
             </div>
           ))}
