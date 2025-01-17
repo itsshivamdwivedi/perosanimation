@@ -17,7 +17,10 @@ const SkyDive = (): JSX.Element => {
     >
       <h2 className="sr-only">{sentence}</h2>
       <View className="h-screen w-screen">
-        <Scene flavor={flavor} sentence={sentence} />
+    
+        <Scene 
+        // @ts-ignore
+        flavor={flavor} sentence={sentence} />
       </View>
     </Bounded>
   );
